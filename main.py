@@ -1,67 +1,55 @@
 import random
-from data_collection import DataCollection
-from behavior_analysis import BehaviorAnalysis
-from risk_scoring import RiskScoring
-from pricing_adjustment import PricingAdjustment
-from feedback_system import FeedbackSystem
+from data_handler import TelematicsLogger
+from driver_behavior import DrivingPatternAnalyzer
+from risk_evaluator import RiskEvaluator
+from policy_pricing import PremiumCalculator
+from user_feedback import AdviceEngine
 
-def generate_large_dataset(num_samples=1000):
-    road_types = ['highway', 'city', 'residential']
-    data = []
+def simulate_driving_data(samples=1000):
+    roads = ['highway', 'city', 'residential']
+    output = []
 
-    for _ in range(num_samples):
-        road = random.choice(road_types)
-        
-        # Speed distribution based on road type
-        if road == 'highway':
-            speed = random.gauss(100, 15)  # mean 100 km/h, std dev 15
-        elif road == 'city':
-            speed = random.gauss(50, 10)
-        else:
-            speed = random.gauss(30, 5)
-        speed = max(0, min(speed, 150))  # clamp speed between 0 and 150
-        
-        # Acceleration between 0 and 5 m/s² (some harsh)
-        acceleration = random.gauss(2, 1.5)
-        acceleration = max(0, min(acceleration, 7))
-        
-        # Braking negative acceleration, between -8 and 0 (harsh braking possible)
-        braking = random.gauss(-3, 2)
-        braking = min(0, max(braking, -8))
-        
-        # Random time of day 0-23
-        time_of_day = random.randint(0, 23)
-        
-        data.append((speed, acceleration, braking, time_of_day, road))
+    for _ in range(samples):
+        road = random.choice(roads)
 
-    return data
+        speed = random.gauss(100, 15) if road == 'highway' else (
+                random.gauss(50, 10) if road == 'city' else random.gauss(30, 5))
+        speed = max(0, min(speed, 150))
 
-def main():
-    collector = DataCollection()
-    large_data = generate_large_dataset(num_samples=1000)
+        accel = max(0, min(random.gauss(2, 1.5), 7))
+        brake = max(-8, min(random.gauss(-3, 2), 0))
+        hour = random.randint(0, 23)
 
-    for sample in large_data:
-        collector.add_telematics_data(*sample) 
+        output.append((speed, accel, brake, hour, road))
 
-    all_data = collector.get_all_data()
+    return output
 
-    analyzer = BehaviorAnalysis(all_data)
-    risk_factor = analyzer.analyze()
+def run_analysis():
+    logger = TelematicsLogger()
+    dataset = simulate_driving_data()
 
-    scorer = RiskScoring(risk_factor)
-    risk_score = scorer.compute_score()
+    for record in dataset:
+        logger.log_trip_data(*record)
 
-    pricing = PricingAdjustment(base_premium=500)
-    adjusted_premium = pricing.adjust_premium(risk_score)
+    all_logs = logger.fetch_all()
 
-    feedback = FeedbackSystem(all_data)
-    recommendations = feedback.generate_recommendations()
+    analyzer = DrivingPatternAnalyzer(all_logs)
+    risk_idx = analyzer.compute_risk_index()
 
-    print(f"Risk Score: {risk_score:.2f}")
-    print(f"Adjusted Premium: ${adjusted_premium}")
-    print("Safety Recommendations:")
-    for rec in recommendations:
-        print("-", rec)
+    evaluator = RiskEvaluator(risk_idx)
+    score = evaluator.get_score()
+
+    calculator = PremiumCalculator(500)
+    premium = calculator.calculate_final(score)
+
+    advisor = AdviceEngine(all_logs)
+    suggestions = advisor.suggest_tips()
+
+    print(f"Computed Risk Score: {score:.2f}")
+    print(f"Estimated Premium: ₹{premium}")
+    print("Driving Suggestions:")
+    for msg in suggestions:
+        print("-", msg)
 
 if __name__ == "__main__":
-    main()
+    run_analysis()
