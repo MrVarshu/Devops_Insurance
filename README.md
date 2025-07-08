@@ -1,75 +1,86 @@
-# Usage-Based Insurance System
+# 🚗 Usage-Based Insurance System
 
-## Project Overview
+## 📘 Project Overview
 
-This project implements a modular usage-based insurance system that analyzes driving behavior data collected via telematics to offer dynamic insurance pricing and personalized safety recommendations.
+This project implements a modular **usage-based insurance (UBI)** system that simulates how insurance providers can adjust premiums based on driver behavior data. Using synthetic telematics data — such as speed, braking, acceleration, time of day, and road type — the system analyzes behavior, computes risk, adjusts premiums accordingly, and offers actionable safety feedback to the driver.
 
-The system processes raw telematics data (speed, acceleration, braking, time of day, road type), analyzes driving behavior patterns, assesses risk, adjusts insurance premiums accordingly, and generates actionable feedback to encourage safer driving.
-
----
-
-## Development Workflow
-
-1. **Created GitHub Repository:**  
-   A new repository was created on GitHub to host and version-control the project code remotely.
-
-2. **Developed Locally in VS Code:**  
-   The codebase was developed using Visual Studio Code. The system was implemented with modular Python scripts that separate concerns into data collection, behavior analysis, risk scoring, pricing adjustment, and feedback generation.
-
-3. **Pushed Code to GitHub:**  
-   Git was initialized locally, changes were committed, and the local repository was linked to the GitHub remote. The full codebase was then pushed to GitHub, enabling collaboration and remote storage.
+The goal is to encourage safer driving and fairer insurance pricing using data-driven insights.
 
 ---
 
-## Code Structure and Modules
+## 🔧 Development Workflow
 
-The project is organized into the following key modules:
+### ✅ 1. Created GitHub Repository
+A dedicated GitHub repository was initialized to manage the source code with version control and enable future collaboration.
 
-- **data_collection.py:** Collects and stores telematics driving data such as speed, acceleration, braking, time of day, and road type.
+### 💻 2. Developed Locally in VS Code
+Development was carried out in **Visual Studio Code** using modular Python scripts. The project follows best practices by separating logic into clear modules:
+- data handling
+- behavior analysis
+- scoring and pricing
+- feedback generation
 
-- **behavior_analysis.py:** Analyzes collected data to identify risky driving patterns and computes an aggregate risk factor.
-
-- **risk_scoring.py:** Converts the risk factor into a numerical risk score used for premium calculation.
-
-- **pricing_adjustment.py:** Adjusts the base insurance premium dynamically based on the computed risk score.
-
-- **feedback_system.py:** Generates personalized safety recommendations aimed at improving driving behavior.
-
-- **main.py:** Orchestrates the entire data pipeline by sequentially calling each module to process telematics data from collection through to feedback.
-
----
-
-## Workflow Pipeline
-
-The system follows a clear and modular pipeline:
-
-1. **Telematics Data Collection:** Raw driving data is collected, representing multiple driving events.
-
-2. **Behavior Analysis:** The collected data is analyzed to detect risky patterns (e.g., speeding, harsh braking).
-
-3. **Risk Assessment:** A risk factor is computed and translated into a risk score reflecting overall driving safety.
-
-4. **Pricing Adjustment:** The insurance premium is adjusted according to the risk score, incentivizing safer driving.
-
-5. **Feedback Generation:** Safety insights and recommendations are generated based on driving behavior to help the driver improve.
+### 🚀 3. Pushed Code to GitHub
+After local development and testing, Git was used to commit and push all modules to GitHub. This setup enables collaborative development and remote backup of code.
 
 ---
 
-## Getting Started
+## 📂 Code Structure and Modules
 
-### Prerequisites
+| File | Description |
+|------|-------------|
+| `data_handler.py` | Collects and stores telematics data like speed, acceleration, braking, etc. |
+| `driver_behavior.py` | Analyzes behavior data to identify risky driving patterns. |
+| `risk_evaluator.py` | Converts the risk factor into a numerical risk score. |
+| `policy_pricing.py` | Dynamically adjusts the base insurance premium based on the risk score. |
+| `user_feedback.py` | Generates personalized feedback and safety tips. |
+| `core.py` | Orchestrates the full pipeline from data generation to output and feedback. |
 
-- Python 3.7 or higher
-- Required Python packages are listed in `requirements.txt` (e.g., numpy)
+---
 
-### Installation and Usage
+## 🔁 Workflow Pipeline
 
-1. Clone the repository:
+The system follows a streamlined pipeline:
+
+1. **Telematics Data Collection**  
+   Simulates raw driving data for multiple trip events.
+
+2. **Behavior Analysis**  
+   Identifies risky driving patterns such as excessive speed or harsh braking.
+
+3. **Risk Scoring**  
+   Assigns a risk score (0.0 to 1.0) based on behavior frequency and severity.
+
+4. **Pricing Adjustment**  
+   Modifies the base insurance premium (up to 50%) depending on the risk score.
+
+5. **Feedback Generation**  
+   Produces personalized suggestions to help the driver improve safety and lower future premiums.
+
+---
+
+## 🚀 Getting Started
+
+### ✅ Prerequisites
+- Python 3.7 or above
+- Required libraries:
+  - `numpy`
+  - `pandas`
+  - `matplotlib`
+  - `scikit-learn`
+
+> Install dependencies listed in `requirements.txt`.
+
+---
+
+### 📥 Installation & Usage
+
+1. Clone the repo:
 
    ```bash
-   git clone https://github.com/yourusername/telematics-insurance.git
-   cd telematics-insurance
-   
+   git clone https://github.com/MrVarshu/Devops_Insurance.git
+   cd Devops_Insurance
+
 2. Install dependencies
    ```bash
    pip install -r requirements.txt
